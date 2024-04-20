@@ -29,6 +29,20 @@ app.post('/login', async function (req, res) {
 
 })
 
+app.post('/register' , async function(req,res) {
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
+  const result = await conn.query("SELECT * from users WHERE email = ?", [email]);
+  if (result.length == 0) {
+    conn.query("INSERT INTO users(username,password,email) VALUES (?,?,?)", [username,password,email])
+    res.send("vous etes inscrit avec succes")
+  }else {
+    res.send("email deja present")
+  }
+  
+})
+
 
 
 
